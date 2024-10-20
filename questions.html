@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz| Questions Page</title>
+    <link rel="stylesheet" href="css/questionStyle.css">
+    <link rel="shortcut icon" href="css/quizfav.ico" type="image/x-icon">
+    <style>
+        .invalid-input {
+            border: 2px solid red;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            resize: vertical; /* Allow vertical resizing only */
+        }
+    </style>
+</head>
+<body>
+    <div id="room-details"></div>
+
+    <div class="details">
+        <label for="number-of-questions">Number of Questions:</label>
+        <input id="number-of-questions" type="number" placeholder="Enter No Of Questions" class="small-input" min="3" max="50">
+
+        <label for="question">Question:</label>
+        <textarea id="question" placeholder="Enter question" class="large-input"></textarea>
+        <p style="font-family: serif; color: black;"><h4>Note:</h4>You can enter a longer, more detailed question here ↑. Feel free to resize the text area for more space as needed.</p>
+
+        <fieldset>
+            <legend>Question Options</legend>
+            <label for="option1">1. Option:</label>
+            <input type="text" id="option1" class="option-input">
+
+            <label for="option2">2. Option:</label>
+            <input type="text" id="option2" class="option-input">
+
+            <label for="option3">3. Option:</label>
+            <input type="text" id="option3" class="option-input">
+
+            <label for="option4">4. Option:</label>
+            <input type="text" id="option4" class="option-input">
+            
+            <label for="correct-answer">Correct Answer:</label>
+            <select id="correct" class="option-input">
+                <option value="">Select the correct answer</option>
+                <!-- Dynamically populate options here -->
+            </select>
+        </fieldset>
+
+        <button id="add" type="button" onclick="questionsAdd()" style="background-color: brown;">Add</button>
+        <button id="time-button" type="button" style="display: none; background-color: aqua; float: right;">Time-Set</button>
+    </div>
+
+    <div id="entered-questions"></div>
+
+    <script src="questions.js"></script>
+    
+    
+</body>
+</html>
