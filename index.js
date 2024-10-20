@@ -60,8 +60,7 @@ function updateTime() {
 
 // Function to enter the test room
 function enterTestRoom() {
-    window.location.assign("testRoom.html");
-    
+    window.open("testRoom.html", "_blank");
 }
 
 // Function to format the date and time
