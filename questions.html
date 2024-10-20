@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz| Questions Page</title>
+    <title>Quiz | Questions Page</title>
     <link rel="stylesheet" href="css/questionStyle.css">
     <link rel="shortcut icon" href="css/quizfav.ico" type="image/x-icon">
     <style>
@@ -20,6 +20,40 @@
             font-size: 16px;
             resize: vertical; /* Allow vertical resizing only */
         }
+
+        /* Modal Overlay Styles */
+        #modalOverlay {
+            display: none; /* Initially hidden */
+            position: fixed; /* Position it fixed to the viewport */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            z-index: 1000; /* Make sure it appears above other content */
+        }
+
+        /* Modal Content Styles */
+        .modal-content {
+            background-color: white; /* White background for the modal */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative; /* Position relative for the close button */
+        }
+
+        /* Close Button Styles */
+        #x {
+            position: absolute; /* Position it relative to the modal */
+            top: 10px; /* Adjust top position */
+            right: 10px; /* Adjust right position */
+            border: none;
+            background-color: transparent; /* No background */
+            font-size: 20px; /* Font size */
+            cursor: pointer; /* Pointer cursor */
+        }
     </style>
 </head>
 <body>
@@ -31,7 +65,9 @@
 
         <label for="question">Question:</label>
         <textarea id="question" placeholder="Enter question" class="large-input"></textarea>
-        <p style="font-family: serif; color: black;"><h4>Note:</h4>You can enter a longer, more detailed question here ↑. Feel free to resize the text area for more space as needed.</p>
+        <p style="font-family: serif; color: black;">
+            <strong>Note:</strong> You can enter a longer, more detailed question here ↑. Feel free to resize the text area for more space as needed.
+        </p>
 
         <fieldset>
             <legend>Question Options</legend>
@@ -54,6 +90,18 @@
             </select>
         </fieldset>
 
+        <!-- Modal Overlay -->
+        <div id="modalOverlay">
+            <div class="modal-content">
+                <button type="button" id="x">x</button>
+                <label for="datetimeStart">Set Time For Test</label>
+                <input type="datetime-local" id="datetimeStart">
+                <label for="datetimeEnd">Set End Time</label>
+                <input type="datetime-local" id="datetimeEnd">
+                <button type="button" onclick="save_time()" style="background-color: aqua;">Save Time</button>
+            </div>
+        </div>
+
         <button id="add" type="button" onclick="questionsAdd()" style="background-color: brown;">Add</button>
         <button id="time-button" type="button" style="display: none; background-color: aqua; float: right;">Time-Set</button>
     </div>
@@ -61,7 +109,5 @@
     <div id="entered-questions"></div>
 
     <script src="questions.js"></script>
-    
-    
 </body>
 </html>

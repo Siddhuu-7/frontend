@@ -237,3 +237,7 @@ function updateCorrectAnswerDropdown() {
 document.getElementById("time-button").addEventListener("click", () => {
     document.getElementById("modalOverlay").style.display = "flex";
 });
+ 
+document.getElementById("x").addEventListener("click",()=>{
+    document.getElementById("modalOverlay").style.display="none";
+})
