@@ -73,7 +73,7 @@ function displayQuestion() {
     divId.innerHTML = ''; 
 
     const h4 = document.createElement('h4');
-    h4.textContent =questionData.question;
+    h4.textContent =questionData.question+" ?";
     divId.appendChild(h4);
 
     const optionsContainer = document.createElement('div');
@@ -119,8 +119,8 @@ function handleNextButton() {
 
     const currentQuestion = data[currentQuestionIndex];
 
-    console.log("Current Question Index:", currentQuestionIndex);
-    console.log("Current Question Data:", currentQuestion);
+    // console.log("Current Question Index:", currentQuestionIndex);
+    // console.log("Current Question Data:", currentQuestion);
 
     if (!currentQuestion) {
         console.error("Current question is undefined at index:", currentQuestionIndex);
@@ -239,7 +239,16 @@ async function submit() {
     const userName = document.getElementById("userName").value.trim();
     const password = document.getElementById("user-password").value.trim();
     const roomId = Number(document.getElementById("roomId").value.trim());
-    localStorage.setItem("roomId",roomId)
+    localStorage.setItem("roomId", roomId);
+
+    const userExists = await Users(userName, roomId);
+    console.log(`User exists status: ${userExists}`);  // Log the result of Users function
+
+    if (userExists) {
+        alert(`There is already a user with this name in Room ${roomId}. Please choose another name.`);
+        return;
+    }
+
     if (!roomId || !password) {
         alert("Room ID and Password are required!");
         return;
@@ -249,14 +258,14 @@ async function submit() {
         const response = await fetch(`https://backend-d485.onrender.com/api/roomsDetails/${roomId}`);
         const roomDetailsArray = await response.json();
         console.log("Room details received:", roomDetailsArray);
-
+         
         if (!Array.isArray(roomDetailsArray) || roomDetailsArray.length === 0) {
             alert("No room details found.");
             return;
         }
 
         const roomDetails = roomDetailsArray.find(room => room.roomId === roomId);
-        console.log(`Searched for Room ID: ${roomId}, Found Room Details:`, roomDetails);
+        // console.log(`Searched for Room ID: ${roomId}, Found Room Details:`, roomDetails);
 
         if (roomDetails) {
             const currentTime = getFormattedDateTime();
@@ -283,7 +292,7 @@ async function submit() {
                 document.getElementById('enter-room').style.display = 'none';  
                 document.getElementById("T").style.display = 'block';  
                 
-                document.body.style.backgroundImage="url('css/oldpaper.jpg')";
+                document.body.style.backgroundImage = "url('css/oldpaper.jpg')";
                 fetchQuestions(roomId); // Fetch questions here
                 
             } else {
@@ -316,4 +325,24 @@ function getFormattedDateTime() {
     const formattedDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
 
     return formattedDateTime;
+}
+
+
+
+async function Users(userName, roomId) {
+    try {
+        const response = await fetch(`https://backend-d485.onrender.com/api/participants/${roomId}`);
+        const data = await response.json();  // await response.json()
+
+        // console.log("Participants data:", data);  // Log the data to check its structure
+
+        // Check if the user exists in the data
+        const userFound = data.find(user => user.userName === userName);
+        // console.log(`User Found:`, userFound);  // Log whether the user is found
+
+        return userFound !== undefined;
+    } catch (error) {
+        console.error("Error fetching participants:", error);
+        return false;
+    }
 }
